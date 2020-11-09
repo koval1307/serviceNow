@@ -1,0 +1,16 @@
+{
+	"components": {
+	    "x-551504-incident-list": {
+	        "innerComponents": [],
+			"uiBuilder": {
+				"associatedTypes": ["global.core", "global.landing-page"],
+				"label": "My Component",
+				"icon": "document-outline",
+				"description": "A description of my component",
+				"category": "primitives"
+			}
+		
+	    }
+	},
+	"scopeName": "x_551504_test_in_0"
+}
