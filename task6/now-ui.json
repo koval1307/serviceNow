@@ -1,20 +1,25 @@
 {
 	"components": {
-	    "x-551504-incident-list2": {
+	    "x-551504-incident-list3": {
 	        "innerComponents": [
-				"now-template-card-assist",
+"now-template-card-assist",
 							"now-loader",
 							"now-modal",
-							"now-dropdown"
+"now-button",
+
+  "now-experience-filter",
+ 
+ 
+  "now-button"
 			],
 			"uiBuilder": {
 				"associatedTypes": ["global.core", "global.landing-page"],
-				"label": "Incident list with modal",
+				"label": "List of incidents with filter",
 				"icon": "document-outline",
-				"description": "Option to delete incident",
+				"description": "Options to filter incidents",
 				"category": "primitives"
 			}
 	    }
 	},
-	"scopeName": "x_551504_test_in_1"
+	"scopeName": "x_551504_test_in_2"
 }

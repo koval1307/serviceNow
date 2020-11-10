@@ -49,7 +49,7 @@ export const actionHandlers = {
 	},
 
 	"NOW_MODAL#FOOTER_ACTION_CLICKED": (coeffects) => {
-		const { action, updateState, state, dispatch } = coeffects;
+		const {  updateState, state, dispatch } = coeffects;
 		const { currentIncident } = state;
 		dispatch("DELETE_INCIDENT",{sys_id: currentIncident.sys_id})
 		updateState({
@@ -73,7 +73,7 @@ export const actionHandlers = {
 		successActionType: "DELETE_INCIDENT_SUCCESS",
 	}),
 	"NOW_MODAL#OPENED_SET": (coeffects) => {
-		const { action, updateState } = coeffects;
+		const { updateState } = coeffects;
 		updateState({
 			isModalOpen: false,
 		});

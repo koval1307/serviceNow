@@ -1,7 +1,7 @@
 
 
 export default (state, ) => {
-	const { result,incidents,  isModalOpen ,currentIncident } = state;
+	const { incidents,  isModalOpen ,currentIncident } = state;
 
 
 	return (
@@ -55,7 +55,7 @@ export default (state, ) => {
 											value: {
 												type: "string",
 												value:
-													`${el.assignment_group.display_value}`|| `No group`,
+													el.assignment_group.display_value|| "No group assigned",
 											},
 										},
 
@@ -63,7 +63,7 @@ export default (state, ) => {
 											label: "Assigned to",
 											value: {
 												type: "string",
-												value: `${el.assigned_to.display_value}`,
+												value: el.assigned_to.display_value || "No Person Assignet To",
 											},
 										},
 									]}
@@ -88,7 +88,7 @@ export default (state, ) => {
 					{
 						label: "Delete",
 						variant: "primary-negative",
-						// clickActionType: "DELETE_ITEM",
+						
 					},
 				]}
 			></now-modal>

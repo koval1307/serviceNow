@@ -1,12 +1,16 @@
 {
 	"components": {
 	    "x-551504-incident-list": {
-	        "innerComponents": [],
+	        "innerComponents": [
+							"now-template-card-assist",
+							"now-loader"
+			
+			],
 			"uiBuilder": {
 				"associatedTypes": ["global.core", "global.landing-page"],
-				"label": "My Component",
+				"label": "Fetched list of incidents",
 				"icon": "document-outline",
-				"description": "A description of my component",
+				"description": "task 3",
 				"category": "primitives"
 			}
 		

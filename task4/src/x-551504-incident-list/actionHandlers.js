@@ -5,23 +5,26 @@ const { COMPONENT_BOOTSTRAPPED } = actionTypes;
 
 
 export const actionHandlers = {
-		[COMPONENT_BOOTSTRAPPED]: (coeffects) => {
-			const { dispatch } = coeffects;
+	[COMPONENT_BOOTSTRAPPED]: (coeffects) => {
+		const { dispatch, updateState } = coeffects;
 
-			dispatch("FETCH_TASK_DATA", {
-				sysparm_display_value: "all",
-				sysparm_exclude_reference_link: true,
-			});
-		},
-		FETCH_TASK_DATA: createHttpEffect("api/now/table/incident", {
-			method: "GET",
-			queryParams: ["sysparm_display_value", "sysparm_exclude_reference_link"],
-			successActionType: "FETCH_TASK_DATA_SUCCEEDED",
-		}),
-		FETCH_TASK_DATA_SUCCEEDED: (coeffects) => {
-			const { action, updateState } = coeffects;
-			const { result } = action.payload;
+		updateState({
+			isLoading:true
+		});
 
-			updateState({ result });
-		},
-	}
+		dispatch("FETCH_INCIDENTS_DATA", {
+			sysparm_display_value: true,
+		});
+	},
+	FETCH_INCIDENTS_DATA: createHttpEffect("api/now/table/incident", {
+		method: "GET",
+		queryParams: ["sysparm_display_value"],
+		successActionType: "FETCH_INCIDENTS_DATA_SUCCEEDED",
+	}),
+	FETCH_INCIDENTS_DATA_SUCCEEDED: (coeffects) => {
+		const { action, updateState } = coeffects;
+		const { result } = action.payload;
+
+		updateState({ incidents: result, isLoading:false });
+	},
+};
