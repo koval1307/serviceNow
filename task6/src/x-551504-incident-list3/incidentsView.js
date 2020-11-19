@@ -1,18 +1,20 @@
 
 
-
 export default (state,) => {
 	const {
-		
 		incidents,
 		isModalOpen,
 		currentIncident,
-		
 		filteredIncidents,
+		toggle,
+		filter
 	} = state;
 	const incidentsArray = Array.from(incidents);
 	const filteredIncidentsArray = Array.from(filteredIncidents);
-
+	console.log("filtered",filteredIncidents)
+	console.log("incidents", incidents)
+	console.log(state)
+	console.log(filter.length)
 
 
 
@@ -22,6 +24,8 @@ export default (state,) => {
 			{state.isLoading ? (
 				<now-loader className="loader" label="Loading..." size="lg" />
 			) : null}
+			{!filteredIncidents.length & !toggle & filter.length !== 0 ? <h1>No incidents</h1> : 
+		
 			<ul className="now-card-container">
 				{filteredIncidentsArray.length
 					? filteredIncidentsArray.map((el) => {
@@ -88,8 +92,10 @@ export default (state,) => {
 									></now-template-card-assist>
 								</li>
 							);
-					  })
-					: incidentsArray.map((el) => {
+					})
+				
+					:
+					incidentsArray.map((el) => {
 							return (
 								<li key={el.sys_id} className="now-card-item">
 									<now-template-card-assist
@@ -157,6 +163,8 @@ export default (state,) => {
 							);
 					  })}
 			</ul>
+				
+				}
 			<now-modal
 				size="md"
 				manage-open

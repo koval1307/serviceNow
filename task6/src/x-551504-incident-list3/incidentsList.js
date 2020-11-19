@@ -22,6 +22,7 @@ createCustomElement("x-551504-incident-list3", {
 		isLoading: false,
 		filter: "",
 		filteredIncidents: {},
+		toggle: true
 
 	},
 	actionHandlers: {

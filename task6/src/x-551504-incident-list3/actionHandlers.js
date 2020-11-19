@@ -1,15 +1,17 @@
 import { createHttpEffect } from "@servicenow/ui-effect-http";
 import { actionTypes } from "@servicenow/ui-core";
+import { debounce } from "lodash";
 
 const { COMPONENT_BOOTSTRAPPED } = actionTypes;
-
 
 export const actionHandlers = {
 	[COMPONENT_BOOTSTRAPPED]: (coeffects) => {
 		const { dispatch, updateState } = coeffects;
-
+        //  const {isLoading, toggle} = state
 		updateState({
 			isLoading: true,
+		
+
 		});
 
 		dispatch("FETCH_INCIDENTS_DATA", {
@@ -24,8 +26,7 @@ export const actionHandlers = {
 	FETCH_INCIDENTS_DATA_SUCCEEDED: (coeffects) => {
 		const { action, updateState } = coeffects;
 		const { result } = action.payload;
-
-		updateState({ incidents: result, isLoading: false });
+		updateState({ incidents: result, isLoading: false, });
 	},
 
 	"NOW_DROPDOWN_PANEL#ITEM_CLICKED": (coeffects) => {
@@ -36,26 +37,21 @@ export const actionHandlers = {
 			case "Closed":
 				updateState({
 					filter: clickedLabel,
-
 					isLoading: true,
 				});
-
 				dispatch("UPDATE_FILTERED_DATA_BY_STATE"), { filter: clickedLabel };
 				break;
 			case "Howard Johnson":
 				updateState({
 					filter: clickedLabel,
-
 					isLoading: true,
 				});
-
 				dispatch("UPDATE_FILTERED_DATA_BY_ASSIGNED_PERSON"),
 					{ filter: clickedLabel };
 				break;
 			case "Beth Anglin":
 				updateState({
 					filter: clickedLabel,
-
 					isLoading: true,
 				});
 
@@ -65,7 +61,6 @@ export const actionHandlers = {
 			case "Don Goodliffe":
 				updateState({
 					filter: clickedLabel,
-
 					isLoading: true,
 				});
 
@@ -75,17 +70,14 @@ export const actionHandlers = {
 			case "ITIL User":
 				updateState({
 					filter: clickedLabel,
-
 					isLoading: true,
 				});
-
 				dispatch("UPDATE_FILTERED_DATA_BY_ASSIGNED_PERSON"),
 					{ filter: clickedLabel };
 				break;
 			case "Fred Luddy":
 				updateState({
 					filter: clickedLabel,
-
 					isLoading: true,
 				});
 
@@ -105,7 +97,6 @@ export const actionHandlers = {
 			case "All":
 				updateState({
 					filter: null,
-
 					isLoading: true,
 				});
 				dispatch("UPDATE_FILTERED_DATA_BY_STATE", { filter: null });
@@ -121,7 +112,6 @@ export const actionHandlers = {
 			case "1 - High":
 				updateState({
 					filter: clickedLabel,
-
 					isLoading: true,
 				});
 				dispatch("UPDATE_FILTERED_DATA_BY_IMPACT"), { filter: clickedLabel };
@@ -129,7 +119,6 @@ export const actionHandlers = {
 			case "2 - Medium":
 				updateState({
 					filter: clickedLabel,
-
 					isLoading: true,
 				});
 				dispatch("UPDATE_FILTERED_DATA_BY_IMPACT"), { filter: clickedLabel };
@@ -137,7 +126,6 @@ export const actionHandlers = {
 			case "3 - Low":
 				updateState({
 					filter: clickedLabel,
-
 					isLoading: true,
 				});
 				dispatch("UPDATE_FILTERED_DATA_BY_IMPACT"), { filter: clickedLabel };
@@ -159,7 +147,6 @@ export const actionHandlers = {
 			case "Network":
 				updateState({
 					filter: clickedLabel,
-
 					isLoading: true,
 				});
 				dispatch("UPDATE_FILTERED_DATA_BY_ASSIGNED_GROUP"),
@@ -193,7 +180,6 @@ export const actionHandlers = {
 			case "Openspace":
 				updateState({
 					filter: clickedLabel,
-
 					isLoading: true,
 				});
 				dispatch("UPDATE_FILTERED_DATA_BY_ASSIGNED_GROUP"),
@@ -203,7 +189,6 @@ export const actionHandlers = {
 			case "Service Desk":
 				updateState({
 					filter: clickedLabel,
-
 					isLoading: true,
 				});
 				dispatch("UPDATE_FILTERED_DATA_BY_ASSIGNED_GROUP"),
@@ -227,55 +212,63 @@ export const actionHandlers = {
 	},
 	UPDATE_FILTERED_DATA_BY_STATE: (coeffects) => {
 		const { updateState, state } = coeffects;
-		const { incidents } = state;
-		const { filter } = state;
-		const filteredData = incidents.filter((el) => el.state === filter);
+		const { incidents, filter,filteredIncidents } = state;
+		const filteredData = filteredIncidents.length
+			? filteredIncidents.filter((el) => el.state === filter)
+			: incidents.filter((el) => el.state === filter);
 		updateState({
 			filteredIncidents: filteredData,
 			isLoading: false,
-			filter: null,
+			toggle: false,
+			// filter: null,
 		});
 	},
 	UPDATE_FILTERED_DATA_BY_IMPACT: (coeffects) => {
 		const { updateState, state } = coeffects;
-		const { incidents } = state;
-		const { filter } = state;
-		const filteredData = incidents.filter((el) => el.impact === filter);
+		const { incidents,filter ,filteredIncidents} = state;
+	const filteredData = filteredIncidents.length
+		? filteredIncidents.filter((el) => el.impact === filter)
+		: incidents.filter((el) => el.impact === filter);
 		updateState({
 			filteredIncidents: filteredData,
 			isLoading: false,
-			filter: null,
+			toggle: false,
+			// filter: null,
 		});
 	},
 	UPDATE_FILTERED_DATA_BY_ASSIGNED_GROUP: (coeffects) => {
 		const { updateState, state } = coeffects;
-		const { incidents } = state;
-		const { filter } = state;
-		const filteredData = incidents.filter(
-			(el) => el.assignment_group.display_value === filter
-		);
+		const { incidents,filter,filteredIncidents } = state;
+		const filteredData = filteredIncidents.length
+			? filteredIncidents.filter(
+					(el) => el.assignment_group.display_value === filter
+			  )
+			: incidents.filter((el) => el.assignment_group.display_value === filter);
 		updateState({
 			filteredIncidents: filteredData,
 			isLoading: false,
-			filter: null,
+			toggle: false,
+			// filter: null,
 		});
 	},
 	UPDATE_FILTERED_DATA_BY_ASSIGNED_PERSON: (coeffects) => {
 		const { updateState, state } = coeffects;
-		const { incidents } = state;
-		const { filter } = state;
-		const filteredData = incidents.filter(
+		const { incidents,filter,filteredIncidents } = state;
+const filteredData = filteredIncidents.length
+	? filteredIncidents.filter(
 			(el) => el.assigned_to.display_value === filter
-		);
+	  )
+	: incidents.filter((el) => el.assigned_to.display_value === filter);
 		updateState({
 			filteredIncidents: filteredData,
 			isLoading: false,
-			filter: null,
+			toggle: false,
+			// filter: null,
 		});
 	},
 
 	"NOW_MODAL#FOOTER_ACTION_CLICKED": (coeffects) => {
-		const { action, updateState, state, dispatch } = coeffects;
+		const { updateState, state, dispatch } = coeffects;
 		const { currentIncident } = state;
 		dispatch("DELETE_INCIDENT", { sys_id: currentIncident.sys_id });
 		updateState({
@@ -296,7 +289,7 @@ export const actionHandlers = {
 		successActionType: "DELETE_INCIDENT_SUCCESS",
 	}),
 	"NOW_MODAL#OPENED_SET": (coeffects) => {
-		const { action, updateState } = coeffects;
+		const {  updateState } = coeffects;
 		updateState({
 			isModalOpen: false,
 		});
@@ -312,19 +305,22 @@ export const actionHandlers = {
 			),
 		});
 	},
-	
+
 	FETCH_FILTERED_DATA_SUCCEEDED: (coeffects) => {
 		const { action, updateState } = coeffects;
 		const { result } = action.payload;
 
-
 		updateState({ filteredIncidents: result, isLoading: false });
 	},
 	"NOW_BUTTON#CLICKED": (coeffects) => {
- const {  dispatch} = coeffects;
-
+		const { dispatch, state, updateState } = coeffects;
+		const {toggle,filter} = state
+		updateState({
+			filter: "",
+			toggle:true
+})
 		dispatch("UPDATE_FILTERED_DATA_BY_IMPACT", {
-			filter: null,
+			// filter: null,
 		});
 	},
 };

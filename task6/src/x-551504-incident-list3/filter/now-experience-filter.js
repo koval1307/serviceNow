@@ -5,9 +5,8 @@ import styles from "./filter-styles.scss";
 import "@servicenow/now-button";
 
 createCustomElement("now-experience-filter", {
-	view: (state, helpers) => {
-	
-	
+	view: (state, {updateState}) => {
+		const { toggle, filter } = state;
 		const dropdownItemsForAssignedPerson = [
 			{ id: "user1", label: "Howard Johnson" },
 			{ id: "user2", label: "Beth Anglin" },
@@ -77,6 +76,7 @@ const dropdownItemsForAssignedGroups = [
 						label="Reset filter"
 						variant="primary"
 						size="lg"
+						on-click={() => updateState({toggle:true, filter:""})}
 					></now-button>
 				</div>
 			</div>
