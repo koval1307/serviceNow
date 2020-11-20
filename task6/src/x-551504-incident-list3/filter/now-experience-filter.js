@@ -19,13 +19,11 @@ createCustomElement("now-experience-filter", {
 			{ id: "High", label: "1 - High" },
 			{ id: "Medium", label: "2 - Medium" },
 			{ id: "Low", label: "3 - Low" },
-			{ id: "All", label: "Any" },
 		];
 		const dropdownItemsForState = [
 			{ id: "onHold", label: "On Hold" },
 			{ id: "closed", label: "Closed" },
 			{ id: "inProgress", label: "In Progress" },
-			{ id: "All", label: "All" },
 			{ id: "New", label: "New" },
 		];
 const dropdownItemsForAssignedGroups = [
@@ -42,33 +40,33 @@ const dropdownItemsForAssignedGroups = [
 					<h2 className="dropDown-title">Filter by incident state : </h2>
 					<now-dropdown
 						className="dropDown-item"
-						hideLabel={true}
+						hideLabel={false}
 						placeholder="Select"
-						select="single"
+						select="none"
 						items={dropdownItemsForState}
 					/>
 					<h2 className="dropDown-title">Filter by incident impact : </h2>
 					<now-dropdown
 						className="dropDown-item"
 						placeholder="Select"
-						hideLabel={true}
-						select="single"
+						hideLabel={false}
+						select="none"
 						items={dropdownItemsForImpact}
 					/>
 					<h2 className="dropDown-title">Filter by assigned group : </h2>
 					<now-dropdown
 						className="dropDown-item"
-						hideLabel={true}
+						hideLabel={false}
 						placeholder="Select"
-						select="single"
+						select="none"
 						items={dropdownItemsForAssignedGroups}
 					/>
 					<h2 className="dropDown-title">Filter by assigned person : </h2>
 					<now-dropdown
 						className="dropDown-item"
-						hideLabel={true}
+						hideLabel={false}
 						placeholder="Select"
-						select="single"
+						select="none"
 						items={dropdownItemsForAssignedPerson}
 					/>
 					<now-button
@@ -76,7 +74,7 @@ const dropdownItemsForAssignedGroups = [
 						label="Reset filter"
 						variant="primary"
 						size="lg"
-						on-click={() => updateState({toggle:true, filter:""})}
+						on-click={() => updateState({ toggle: true, filter: "" })}
 					></now-button>
 				</div>
 			</div>

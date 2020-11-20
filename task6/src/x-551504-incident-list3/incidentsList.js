@@ -17,11 +17,11 @@ createCustomElement("x-551504-incident-list3", {
 	initialState: {
 		isModalOpen: false,
 		currentIncident: {},
-		incidents: {},
+		incidents: [],
 		deletedIncidentId: "",
 		isLoading: false,
 		filter: "",
-		filteredIncidents: {},
+		filteredIncidents: [],
 		toggle: true
 
 	},

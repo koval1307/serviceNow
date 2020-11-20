@@ -7,11 +7,9 @@ const { COMPONENT_BOOTSTRAPPED } = actionTypes;
 export const actionHandlers = {
 	[COMPONENT_BOOTSTRAPPED]: (coeffects) => {
 		const { dispatch, updateState } = coeffects;
-        //  const {isLoading, toggle} = state
+		//  const {isLoading, toggle} = state
 		updateState({
 			isLoading: true,
-		
-
 		});
 
 		dispatch("FETCH_INCIDENTS_DATA", {
@@ -26,7 +24,7 @@ export const actionHandlers = {
 	FETCH_INCIDENTS_DATA_SUCCEEDED: (coeffects) => {
 		const { action, updateState } = coeffects;
 		const { result } = action.payload;
-		updateState({ incidents: result, isLoading: false, });
+		updateState({ incidents: result, isLoading: false });
 	},
 
 	"NOW_DROPDOWN_PANEL#ITEM_CLICKED": (coeffects) => {
@@ -212,7 +210,7 @@ export const actionHandlers = {
 	},
 	UPDATE_FILTERED_DATA_BY_STATE: (coeffects) => {
 		const { updateState, state } = coeffects;
-		const { incidents, filter,filteredIncidents } = state;
+		const { incidents, filter, filteredIncidents } = state;
 		const filteredData = filteredIncidents.length
 			? filteredIncidents.filter((el) => el.state === filter)
 			: incidents.filter((el) => el.state === filter);
@@ -225,10 +223,10 @@ export const actionHandlers = {
 	},
 	UPDATE_FILTERED_DATA_BY_IMPACT: (coeffects) => {
 		const { updateState, state } = coeffects;
-		const { incidents,filter ,filteredIncidents} = state;
-	const filteredData = filteredIncidents.length
-		? filteredIncidents.filter((el) => el.impact === filter)
-		: incidents.filter((el) => el.impact === filter);
+		const { incidents, filter, filteredIncidents } = state;
+		const filteredData = filteredIncidents.length
+			? filteredIncidents.filter((el) => el.impact === filter)
+			: incidents.filter((el) => el.impact === filter);
 		updateState({
 			filteredIncidents: filteredData,
 			isLoading: false,
@@ -238,7 +236,7 @@ export const actionHandlers = {
 	},
 	UPDATE_FILTERED_DATA_BY_ASSIGNED_GROUP: (coeffects) => {
 		const { updateState, state } = coeffects;
-		const { incidents,filter,filteredIncidents } = state;
+		const { incidents, filter, filteredIncidents } = state;
 		const filteredData = filteredIncidents.length
 			? filteredIncidents.filter(
 					(el) => el.assignment_group.display_value === filter
@@ -248,22 +246,22 @@ export const actionHandlers = {
 			filteredIncidents: filteredData,
 			isLoading: false,
 			toggle: false,
-			// filter: null,
+	
 		});
 	},
 	UPDATE_FILTERED_DATA_BY_ASSIGNED_PERSON: (coeffects) => {
 		const { updateState, state } = coeffects;
-		const { incidents,filter,filteredIncidents } = state;
-const filteredData = filteredIncidents.length
-	? filteredIncidents.filter(
-			(el) => el.assigned_to.display_value === filter
-	  )
-	: incidents.filter((el) => el.assigned_to.display_value === filter);
+		const { incidents, filter, filteredIncidents } = state;
+		const filteredData = filteredIncidents.length
+			? filteredIncidents.filter(
+					(el) => el.assigned_to.display_value === filter
+			  )
+			: incidents.filter((el) => el.assigned_to.display_value === filter);
 		updateState({
 			filteredIncidents: filteredData,
 			isLoading: false,
 			toggle: false,
-			// filter: null,
+
 		});
 	},
 
@@ -289,7 +287,7 @@ const filteredData = filteredIncidents.length
 		successActionType: "DELETE_INCIDENT_SUCCESS",
 	}),
 	"NOW_MODAL#OPENED_SET": (coeffects) => {
-		const {  updateState } = coeffects;
+		const { updateState } = coeffects;
 		updateState({
 			isModalOpen: false,
 		});
@@ -303,6 +301,8 @@ const filteredData = filteredIncidents.length
 			incidents: state.incidents.filter(
 				(el) => el.sys_id !== state.deletedIncidentId
 			),
+			filteredIncidents:state.filteredIncidents.filter(
+				(el) => el.sys_id !== state.deletedIncidentId)
 		});
 	},
 
@@ -314,11 +314,11 @@ const filteredData = filteredIncidents.length
 	},
 	"NOW_BUTTON#CLICKED": (coeffects) => {
 		const { dispatch, state, updateState } = coeffects;
-		const {toggle,filter} = state
+		const { toggle, filter } = state;
 		updateState({
 			filter: "",
-			toggle:true
-})
+			toggle: true,
+		});
 		dispatch("UPDATE_FILTERED_DATA_BY_IMPACT", {
 			// filter: null,
 		});
